@@ -13,6 +13,10 @@ abstract class Product {
 
     public function __construct(string $name, string $description, float $price)
     {
+        if ($price < 0) {
+            throw new Exception('Error: A products price cannot be negative');
+        }
+
         $this->name = $name;
         $this->description = $description;
         $this->price = $price;
@@ -37,11 +41,12 @@ abstract class Product {
 class PhysicalProduct extends Product {
     public float $weight;
 
+    // When you have a child class that needs to override it's parent's constructor
+    // We add a new construct method with all the params it needs
+    // It routes the params from it's parent via the parent's constructor
     public function __construct(string $name, string $description, float $price, float $weight)
     {
-        $this->name = $name;
-        $this->description = $description;
-        $this->price = $price;
+        parent::__construct($name, $description, $price);
         $this->weight = $weight;
     }
 
