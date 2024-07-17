@@ -2,14 +2,6 @@
 
 declare(strict_types = 1);
 
-if (isset($_POST['submitted'])) {
-    echo 'Your username is ' . $_POST['username'] . ' and your password is ' . $_POST['password'];
-    echo "<div>
-            <h4>Signed in as ". $_POST['username']. "</h4>
-            <span>Email: " . $_POST['email'] . "</span>
-          </div>";
-}
-
 class EmailAddress {
     private string $email;
 
@@ -28,10 +20,7 @@ class EmailAddress {
     }
 }
 
-$address = new EmailAddress('dodgy@dodgy.com');
-echo $address->getEmail();
-
-echo "<pre>"
+echo "<pre>";
 
 ?>
 
@@ -47,3 +36,21 @@ echo "<pre>"
 
     <input type="submit" name="submitted" value="Login"/>
 </form>
+
+<?php
+
+echo "<pre>";
+
+if (isset($_POST['submitted'])) {
+    echo 'Your username is ' . $_POST['username'] . ' and your password is ' . $_POST['password'];
+    echo "<div>
+            <h4>Signed in as ". $_POST['username']. "</h4>
+            <span>Email: " . $_POST['email'] . "</span>
+          </div>";
+}
+
+$address = new EmailAddress('dodgy@dodgy.com');
+echo $address->getEmail();
+
+?>
+
