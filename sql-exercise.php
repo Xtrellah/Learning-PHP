@@ -14,26 +14,19 @@ $db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 
 // Preparing to execute a query
 // The query has not run yet
-$query = $db->prepare('SELECT * FROM `users`;');
+$query = $db->prepare('SELECT `users`.`id` AS `user_id`, `users`.`username`, `posts`.`title`, `posts`.`image` 
+                                FROM `users` 
+                                LEFT JOIN `posts` 
+                                ON `users`.`id` = `posts`.`user_id`;');
 // To actually run it:
 $query->execute();
-// To get the results:
 $users = $query->fetchAll();
-// Now $children contains an array of arrays - we can use it like we would any other array
 
-$query = $db->prepare('SELECT * FROM `posts`;');
-$query->execute();
-$posts = $query->fetchAll();
 
 echo '<ul>';
 foreach ($users as $user) {
     echo "<li>{$user['username']} - {$user['id']}</li>";
-}
-echo '</ul>';
-
-echo '<ul>';
-foreach ($posts as $post) {
-    echo "<li>{$post['title']} - {$post['user_id']}</li>";
-    echo "<img src='{$post['image']}'/>";
+    echo "<li>{$user['title']} - {$user['user_id']}</li>";
+    echo "<img alt='image' src='{$user['image']}'/>";
 }
 echo '</ul>';
